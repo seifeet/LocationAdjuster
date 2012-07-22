@@ -29,6 +29,7 @@
 #import "TWAppDelegate.h"
 #import "TWFirstViewController.h"
 #import "TWSecondViewController.h"
+#import "TWThirdViewController.h"
 
 @implementation TWAppDelegate
 
@@ -41,8 +42,10 @@
     // Override point for customization after application launch.
     UIViewController *viewController1 = [[TWFirstViewController alloc] initWithNibName:@"TWFirstViewController" bundle:nil];
     UIViewController *viewController2 = [[TWSecondViewController alloc] initWithNibName:@"TWSecondViewController" bundle:nil];
+    UIViewController *viewController3 = [[TWThirdViewController alloc] initWithNibName:@"TWThirdViewController" bundle:nil];
+    
     self.tabBarController = [[UITabBarController alloc] init];
-    self.tabBarController.viewControllers = [NSArray arrayWithObjects:viewController1, viewController2, nil];
+    self.tabBarController.viewControllers = [NSArray arrayWithObjects:viewController1, viewController2, viewController3, nil];
     self.window.rootViewController = self.tabBarController;
     [self.window makeKeyAndVisible];
     return YES;

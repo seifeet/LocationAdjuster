@@ -1,6 +1,6 @@
 //
-//  TWMapPin.h
-//  TruckWiser
+//  TWThirdViewController.h
+//  TWLocationAdjuster
 //
 //  Created by Andrey Tabachnik on 7/21/12.
 //  Copyright (c) 2012 Truckwiser. All rights reserved.
@@ -25,21 +25,18 @@
 //  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
-
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 
-@interface TWMapPin : NSObject <MKAnnotation>
+@interface TWThirdViewController : UIViewController
+<MKMapViewDelegate, CLLocationManagerDelegate>
 {
-    CLLocationCoordinate2D coordinate;
-    NSString *title;
-    NSString *subtitle;
+    
 }
 
-@property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
-@property (nonatomic, copy) NSString *title;
-@property (nonatomic, copy) NSString *subtitle;
-
-- (id)initWithCoordinates:(CLLocationCoordinate2D)location placeName:(NSString *)placeName description:(NSString *)description;
+@property (strong, nonatomic) CLLocationManager *locationManager;
+@property (weak, nonatomic) IBOutlet UITextView *textView;
+@property (weak, nonatomic) IBOutlet UITextField *address;
+@property (weak, nonatomic) IBOutlet MKMapView   *mapView;
 
 @end

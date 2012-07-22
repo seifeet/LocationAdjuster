@@ -1,5 +1,5 @@
 //
-//  TWSecondViewController.m
+//  TWThirdViewController.m
 //  TWLocationAdjuster
 //
 //  Created by Andrey Tabachnik on 7/21/12.
@@ -27,21 +27,21 @@
 //
 
 #import "NSString+Helper.h"
+#import "TWThirdViewController.h"
+#import "TWMapOverlay.h"
+#import "TWMapOverlayView.h"
 
-#import "TWSecondViewController.h"
-#import "TWMapPin.h"
-
-@interface TWSecondViewController ()
-{
-    TWMapPin *_pin;
-}
+@interface TWThirdViewController ()
 
 @end
 
-@implementation TWSecondViewController
+@implementation TWThirdViewController
+{
 
-@synthesize textView = _textView;
+}
+
 @synthesize locationManager = _locationManager;
+@synthesize textView = _textView;
 @synthesize address         = _address;
 @synthesize mapView         = _mapView;
 
@@ -49,8 +49,8 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.title = NSLocalizedString(@"Third", @"Third");
-        self.tabBarItem.image = [UIImage imageNamed:@"first"];
+        self.title = NSLocalizedString(@"Second", @"Second");
+        self.tabBarItem.image = [UIImage imageNamed:@"second"];
         
         [self clear];
     }
@@ -80,17 +80,11 @@
 }
 
 # pragma mark - protocol MKMapViewDelegate
-- (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
-{
-    CLLocationCoordinate2D coords = [_mapView centerCoordinate];
+- (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id <MKOverlay>)overlay
+{     
+    TWMapOverlayView *mapOverlayView = [[TWMapOverlayView alloc] initWithOverlay:overlay];
     
-    if (_pin) {
-        [_mapView removeAnnotation:_pin];
-    }
-    _pin = [[TWMapPin alloc] initWithCoordinates:coords placeName:@"your location" description:@"i am glad you came"];
-    [_mapView addAnnotation:_pin];
-    
-    self.textView.text = [NSString stringWithFormat:@"your pin is located at: %f %f", coords.latitude, coords.longitude]; 
+    return mapOverlayView;
 }
 
 # pragma mark - location
@@ -103,32 +97,27 @@
     if(timePeriod < 2.0 ) {
         [manager stopUpdatingLocation];
         
-        MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(newLocation.coordinate, 250, 250);
+        MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(newLocation.coordinate, 500, 500);
         [self.mapView setRegion:region animated:YES];
         
-        if (_pin) {
-            [_mapView removeAnnotation:_pin];
-        }
+        TWMapOverlay *mapOverlay = [[TWMapOverlay alloc] initWithCoordinate:newLocation.coordinate];
+        [_mapView addOverlay:mapOverlay];
         
         CLLocationCoordinate2D coords = newLocation.coordinate;
-        _pin = [[TWMapPin alloc] initWithCoordinates:coords placeName:@"your location" description:@"i am glad you came"];
-        [_mapView addAnnotation:_pin];
+        self.textView.text = [NSString stringWithFormat:@"your current location was pinned at: %f %f", coords.latitude, coords.longitude];  
     }
 }
 
 - (void)centerMapViewForAddress:(NSString *)address
 {
     [address fetchGeocodeAddressWithCompletionHanlder:^(CLLocationCoordinate2D coords) {
+        TWMapOverlay *mapOverlay = [[TWMapOverlay alloc] initWithCoordinate:coords];
+        [_mapView addOverlay:mapOverlay];
         
-        MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(coords, 250, 250);        
+        MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(coords, 500, 500);        
         [self.mapView setRegion:region animated:YES];
         
-        if (_pin) {
-            [_mapView removeAnnotation:_pin];
-        }
-        
-        _pin = [[TWMapPin alloc] initWithCoordinates:coords placeName:@"your location" description:@"i am glad you came"];
-        [_mapView addAnnotation:_pin];
+        self.textView.text = [NSString stringWithFormat:@"your location was pinned at: %f %f", coords.latitude, coords.longitude]; 
     }];
 }
 
@@ -152,5 +141,4 @@
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     self.locationManager.delegate = self;
 }
-
 @end
