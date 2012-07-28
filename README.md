@@ -1,11 +1,11 @@
 LocationAdjuster
 ================
 
-The project has a view with two tabs.
+The project has a controller that contains three tabs.
 
-The first tab has a simple map view with a pin at an approximate user location. The view allows the user to adjust his location by moving a the map.
+The first tab demonstrates how to adjust pin by moving the map behind the pin.
 
-The second tab is similar to the first one but demonstrates how to use MKAnnotation protocol.
+The second tab demonstrates how to use MKAnnotation protocol.
 
 The third tab demonstrates how to use MapOverlay with an image.
 
