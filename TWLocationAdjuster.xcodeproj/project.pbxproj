@@ -28,7 +28,6 @@
 		593DE10515BB70EC00E96220 /* TWMapPin.m in Sources */ = {isa = PBXBuildFile; fileRef = 593DE10015BB70EC00E96220 /* TWMapPin.m */; };
 		593DE10615BB70EC00E96220 /* TWMapOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 593DE10115BB70EC00E96220 /* TWMapOverlayView.m */; };
 		593DE10715BB70EC00E96220 /* TWMapOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 593DE10315BB70EC00E96220 /* TWMapOverlay.m */; };
-		593DE10D15BB7D8400E96220 /* NSString+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 593DE10B15BB7D8400E96220 /* NSString+Helper.m */; };
 		593DE12915BB7E4300E96220 /* NSObject+SBJson.m in Sources */ = {isa = PBXBuildFile; fileRef = 593DE11115BB7E4300E96220 /* NSObject+SBJson.m */; };
 		593DE12A15BB7E4300E96220 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 593DE11415BB7E4300E96220 /* SBJsonParser.m */; };
 		593DE12B15BB7E4300E96220 /* SBJsonStreamParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 593DE11615BB7E4300E96220 /* SBJsonStreamParser.m */; };
@@ -44,6 +43,7 @@
 		593DE13615BB800800E96220 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 593DE13515BB800800E96220 /* CoreLocation.framework */; };
 		59CBFD7015BC5DEC00F2AD51 /* TWThirdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59CBFD6E15BC5DEC00F2AD51 /* TWThirdViewController.xib */; };
 		59CBFD7415BC5E0E00F2AD51 /* TWThirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59CBFD7315BC5E0E00F2AD51 /* TWThirdViewController.m */; };
+		59EAAC4F15CCB70F0034F1F8 /* TWGeocodeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 59EAAC4E15CCB70F0034F1F8 /* TWGeocodeHelper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -77,8 +77,6 @@
 		593DE10215BB70EC00E96220 /* TWMapOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWMapOverlayView.h; sourceTree = "<group>"; };
 		593DE10315BB70EC00E96220 /* TWMapOverlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWMapOverlay.m; sourceTree = "<group>"; };
 		593DE10415BB70EC00E96220 /* TWMapOverlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWMapOverlay.h; sourceTree = "<group>"; };
-		593DE10B15BB7D8400E96220 /* NSString+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Helper.m"; sourceTree = "<group>"; };
-		593DE10C15BB7D8400E96220 /* NSString+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Helper.h"; sourceTree = "<group>"; };
 		593DE11015BB7E4300E96220 /* NSObject+SBJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJson.h"; sourceTree = "<group>"; };
 		593DE11115BB7E4300E96220 /* NSObject+SBJson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJson.m"; sourceTree = "<group>"; };
 		593DE11215BB7E4300E96220 /* SBJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJson.h; sourceTree = "<group>"; };
@@ -108,6 +106,8 @@
 		59CBFD6F15BC5DEC00F2AD51 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/TWThirdViewController.xib; sourceTree = "<group>"; };
 		59CBFD7215BC5DFE00F2AD51 /* TWThirdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWThirdViewController.h; sourceTree = "<group>"; };
 		59CBFD7315BC5E0E00F2AD51 /* TWThirdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWThirdViewController.m; sourceTree = "<group>"; };
+		59EAAC4D15CCB70F0034F1F8 /* TWGeocodeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWGeocodeHelper.h; sourceTree = "<group>"; };
+		59EAAC4E15CCB70F0034F1F8 /* TWGeocodeHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWGeocodeHelper.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -203,9 +203,9 @@
 		593DE0FD15BB70BE00E96220 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				59EAAC4D15CCB70F0034F1F8 /* TWGeocodeHelper.h */,
+				59EAAC4E15CCB70F0034F1F8 /* TWGeocodeHelper.m */,
 				593DE0FE15BB70C500E96220 /* MapExtensions */,
-				593DE10C15BB7D8400E96220 /* NSString+Helper.h */,
-				593DE10B15BB7D8400E96220 /* NSString+Helper.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -352,7 +352,6 @@
 				593DE10515BB70EC00E96220 /* TWMapPin.m in Sources */,
 				593DE10615BB70EC00E96220 /* TWMapOverlayView.m in Sources */,
 				593DE10715BB70EC00E96220 /* TWMapOverlay.m in Sources */,
-				593DE10D15BB7D8400E96220 /* NSString+Helper.m in Sources */,
 				593DE12915BB7E4300E96220 /* NSObject+SBJson.m in Sources */,
 				593DE12A15BB7E4300E96220 /* SBJsonParser.m in Sources */,
 				593DE12B15BB7E4300E96220 /* SBJsonStreamParser.m in Sources */,
@@ -366,6 +365,7 @@
 				593DE13315BB7E4300E96220 /* SBJsonUTF8Stream.m in Sources */,
 				593DE13415BB7E4300E96220 /* SBJsonWriter.m in Sources */,
 				59CBFD7415BC5E0E00F2AD51 /* TWThirdViewController.m in Sources */,
+				59EAAC4F15CCB70F0034F1F8 /* TWGeocodeHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

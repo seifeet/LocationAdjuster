@@ -27,7 +27,7 @@
 //
 
 #import "TWFirstViewController.h"
-#import "NSString+Helper.h"
+#import "TWGeocodeHelper.h"
 
 @interface TWFirstViewController ()
 
@@ -98,8 +98,7 @@
 
 - (void)centerMapViewForAddress:(NSString *)address
 {
-    [address fetchGeocodeAddressWithCompletionHanlder:^(CLLocationCoordinate2D coords) {
-
+    [TWGeocodeHelper geocodeAddress:address withCompletionHanlder:^(CLLocationCoordinate2D coords) {
         MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(coords, 250, 250);        
         [self.mapView setRegion:region animated:YES];
     }];

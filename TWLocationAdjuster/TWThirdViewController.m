@@ -26,7 +26,7 @@
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#import "NSString+Helper.h"
+#import "TWGeocodeHelper.h"
 #import "TWThirdViewController.h"
 #import "TWMapOverlay.h"
 #import "TWMapOverlayView.h"
@@ -110,7 +110,7 @@
 
 - (void)centerMapViewForAddress:(NSString *)address
 {
-    [address fetchGeocodeAddressWithCompletionHanlder:^(CLLocationCoordinate2D coords) {
+    [TWGeocodeHelper geocodeAddress:address withCompletionHanlder:^(CLLocationCoordinate2D coords) {
         TWMapOverlay *mapOverlay = [[TWMapOverlay alloc] initWithCoordinate:coords];
         [_mapView addOverlay:mapOverlay];
         
