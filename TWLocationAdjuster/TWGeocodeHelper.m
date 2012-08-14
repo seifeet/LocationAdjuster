@@ -28,15 +28,15 @@
     gUrl = [gUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     NSString *infoData = [[NSString alloc] initWithContentsOfURL:[NSURL URLWithString:gUrl]
-                                                         encoding:NSUTF8StringEncoding
-                                                            error:nil];
+                                                        encoding:NSUTF8StringEncoding
+                                                           error:nil];
     
     if ((infoData == nil) || ([infoData isEqualToString:@"[]"])) {
         return location;
     } else {
         
-        NSDictionary *jsonObject = [infoData JSONValue]; 
-
+        NSDictionary *jsonObject = [infoData JSONValue];
+        
         if (jsonObject == nil) {
             return nil;
         }
@@ -51,15 +51,16 @@
                                                   longitude:[[value valueForKey:@"lng"] doubleValue]];
             
             *stop = YES;
-        }];  
-    }   
+        }];
+    }
     
     return location;
 }
 
-+ (NSString *)openMapReverseGeocodeLocation:(CLLocation *)location
++ (NSDictionary *)openMapReverseGeocodeLocation:(CLLocation *)location
 {
-    __block NSString *address = @"";
+    __block NSString *address     = @"";
+    __block NSString *description = @"";
     
     NSString *url = [NSString stringWithFormat:kTWOpenMapsReverseGeocodeURL, location.coordinate.latitude, location.coordinate.longitude];
     
@@ -76,7 +77,12 @@
             return nil;
         }
         
+        NSString     *name   = [jsonObject objectForKey:@"display_name"];
         NSDictionary *result = [jsonObject objectForKey:@"address"];
+        
+        if (name) {
+            description = name;
+        }
         
         if (result) {
             NSString *road     = [result objectForKey:@"road"];
@@ -84,7 +90,7 @@
             NSString *postcode = [result objectForKey:@"postcode"];
             
             if (!city) {
-               city = [result objectForKey:@"village"]; 
+                city = [result objectForKey:@"village"];
             }
             
             if (!city) {
@@ -97,7 +103,9 @@
         }
     }
     
-    return address;
+    return [NSDictionary dictionaryWithObjectsAndKeys:
+            address, @"address",
+            description, @"description", nil];
 }
 
 + (void)geocodeAddress:(NSString *)address withCompletionHanlder:(ForwardGeoCompletionBlock)completion
@@ -164,16 +172,27 @@
                 [placemarks enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                     
                     CLPlacemark *placemark = (CLPlacemark *)obj;
-           
+                    
                     if ([placemark.country isEqualToString:@"United States"]) {
                         
                         NSLog(@"Found coords for zip: %f %f", placemark.location.coordinate.latitude,placemark.location.coordinate.longitude);
                         
                         if (completion && [placemark.addressDictionary count]) {
-                            NSString *formattedAddress = [NSString stringWithFormat:@"%@ %@, %@, %@", placemark.subThoroughfare, placemark.thoroughfare, placemark.locality, placemark.postalCode];
+                            NSString *streetNumber = placemark.subThoroughfare;
+                            NSString *streetName   = placemark.thoroughfare;
+                            NSString *city         = placemark.locality;
+                            NSString *postalCode   = placemark.postalCode;
+                            NSString *description  = placemark.name ? placemark.name : @"";
+                            NSString *formattedAddress = @"";
+                            
+                            if (streetNumber && streetName && city && postalCode) {
+                                formattedAddress = [NSString stringWithFormat:@"%@ %@, %@ %@", streetNumber, streetName, city, postalCode];
+                            } else if (streetName && city && postalCode) {
+                                formattedAddress = [NSString stringWithFormat:@"%@, %@ %@", streetName, city, postalCode];
+                            }
                             
                             NSLog(@"%@", formattedAddress);
-                            completion(formattedAddress);
+                            completion(formattedAddress, description);
                         }
                         
                         *stop = YES;
@@ -182,17 +201,19 @@
             }
         };
         
-        [geocoder reverseGeocodeLocation:location completionHandler:completionHandler]; 
+        [geocoder reverseGeocodeLocation:location completionHandler:completionHandler];
     } else {
         dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
         
         dispatch_async(queue, ^{
             
-            NSString *formattedAddress = [TWGeocodeHelper openMapReverseGeocodeLocation:location];
+            NSDictionary *result  = [TWGeocodeHelper openMapReverseGeocodeLocation:location];
+            NSString *address     = [result objectForKey:@"address"];
+            NSString *description = [result objectForKey:@"description"];
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (completion) {
-                    completion(formattedAddress);
+                    completion(address, description);
                 }
             });
         });

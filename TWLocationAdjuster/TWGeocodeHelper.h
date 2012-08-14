@@ -10,7 +10,7 @@
 #import <CoreLocation/CoreLocation.h>
 
 typedef void (^ForwardGeoCompletionBlock)(CLLocationCoordinate2D coords);
-typedef void (^ReverseGeoCompletionBlock)(NSString *address);
+typedef void (^ReverseGeoCompletionBlock)(NSString *address, NSString* description);
 
 @interface TWGeocodeHelper : NSObject
 
